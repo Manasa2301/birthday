@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday Sravanthi 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
+    background:linear-gradient(135deg,#ffdce8,#ffeef7,#f9ddff);
+    color:#5c3a4a;
+}
+
+/* STARS */
+
+.stars{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    z-index:-5;
+}
+
+.stars span{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{
+        opacity:0.3;
+    }
+    to{
+        opacity:1;
+        transform:scale(2);
+    }
+}
+
+/* FLOWERS */
+
+.flowers{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-4;
+}
+
+.flowers span{
+    position:absolute;
+    top:-50px;
+    font-size:24px;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    0%{
+        transform:translateY(-10vh) rotate(0deg);
+    }
+
+    100%{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* BALLOONS */
+
+.balloons{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-3;
+}
+
+.balloon{
+    position:absolute;
+    bottom:-200px;
+    width:70px;
+    height:90px;
+    border-radius:50%;
+    animation:floatUp linear infinite;
+}
+
+.balloon::before{
+    content:'';
+    position:absolute;
+    width:2px;
+    height:80px;
+    background:#999;
+    left:50%;
+    top:90px;
+}
+
+.balloon1{
+    background:#ff6fa5;
+    left:10%;
+    animation-duration:12s;
+}
+
+.balloon2{
+    background:#ffb347;
+    left:25%;
+    animation-duration:15s;
+}
+
+.balloon3{
+    background:#9b59b6;
+    left:45%;
+    animation-duration:13s;
+}
+
+.balloon4{
+    background:#4ecdc4;
+    left:65%;
+    animation-duration:17s;
+}
+
+.balloon5{
+    background:#ff7675;
+    left:85%;
+    animation-duration:14s;
+}
+
+@keyframes floatUp{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    100%{
+        transform:translateY(-130vh);
+        opacity:0;
+    }
+
+}
+
+/* OPEN PAGE */
+
+.open-page{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+/* ENVELOPE */
+
+.envelope{
+    position:relative;
+    width:320px;
+    height:220px;
+    perspective:1000px;
+}
+
+.envelope-body{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#f7c7d8;
+    border-radius:0 0 25px 25px;
+    bottom:0;
+    z-index:1;
+}
+
+.flap{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:120px;
+    background:#eca7bf;
+    clip-path:polygon(0 0,50% 100%,100% 0);
+    transform-origin:top;
+    transition:1s ease;
+    z-index:5;
+}
+
+.letter-paper{
+    position:absolute;
+    width:88%;
+    height:170px;
+    background:white;
+    left:6%;
+    top:25px;
+    border-radius:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:2;
+    transition:1s ease;
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+.letter-paper h2{
+    font-family:'Great Vibes',cursive;
+    font-size:42px;
+    color:#ff5d9e;
+}
+
+/* FIXED OPEN EFFECT */
+
+.envelope.open .flap{
+    transform:rotateX(180deg);
+}
+
+.envelope.open .letter-paper{
+    transform:translateY(-160px);
+}
+
+/* BUTTONS */
+
+.open-btn,
+.next-btn{
+    margin-top:40px;
+    padding:14px 40px;
+    border:none;
+    border-radius:40px;
+    background:#ff5d9e;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.open-btn:hover,
+.next-btn:hover{
+    transform:scale(1.08);
+}
+
+/* POPUP */
+
+.popup{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    width:90%;
+    max-width:700px;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(15px);
+    border-radius:30px;
+    padding:40px;
+    text-align:center;
+    z-index:999;
+    transition:0.6s;
+}
+
+.popup.show{
+    transform:translate(-50%,-50%) scale(1);
+}
+
+.birthday-text{
+    font-size:70px;
+    color:#ff4f93;
+    font-family:'Great Vibes',cursive;
+}
+
+.name{
+    font-size:45px;
+    color:#ff5d9e;
+    font-family:'Great Vibes',cursive;
+}
+
+.typing{
+    margin-top:20px;
+    font-size:20px;
+    line-height:1.8;
+    min-height:80px;
+}
+
+/* MAIN CONTENT */
+
+.main-content{
+    display:none;
+    padding:80px 20px;
+}
+
+.main-content.show{
+    display:block;
+}
+
+/* CARD */
+
+.card{
+    max-width:950px;
+    margin:40px auto;
+    background:rgba(255,255,255,0.3);
+    backdrop-filter:blur(10px);
+    border-radius:30px;
+    padding:30px;
+    display:flex;
+    gap:30px;
+    align-items:center;
+    flex-wrap:wrap;
+    box-shadow:0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* IMAGE FIX */
+
+.card img{
+    width:320px;
+    height:420px;
+    object-fit:cover;
+    border-radius:25px;
+    display:block;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    background:white;
+}
+
+/* MESSAGE */
+
+.message{
+    flex:1;
+}
+
+.message h2{
+    font-size:50px;
+    color:#ff5d9e;
+    margin-bottom:20px;
+    font-family:'Great Vibes',cursive;
+}
+
+.message p{
+    font-size:18px;
+    line-height:1.9;
+}
+
+/* SECOND CARD */
+
+.second-card{
+    display:none;
+}
+
+.second-card.show{
+    display:flex;
+}
+
+.highlight{
+    font-size:30px;
+    color:#ff4f93;
+    font-family:'Great Vibes',cursive;
+}
+
+/* MUSIC */
+
+.music-box{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#ff5d9e;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:4px;
+}
+
+.bar{
+    width:5px;
+    background:white;
+    border-radius:10px;
+    animation:music 1s infinite ease-in-out;
+}
+
+.bar:nth-child(1){height:20px;}
+.bar:nth-child(2){height:35px;animation-delay:0.2s;}
+.bar:nth-child(3){height:25px;animation-delay:0.4s;}
+.bar:nth-child(4){height:40px;animation-delay:0.6s;}
+
+@keyframes music{
+    0%,100%{
+        transform:scaleY(1);
+    }
+    50%{
+        transform:scaleY(1.8);
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .card img{
+        width:100%;
+        height:auto;
+    }
+
+    .birthday-text{
+        font-size:50px;
+    }
+
+    .name{
+        font-size:35px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- STARS -->
+
+<div class="stars" id="stars"></div>
+
+<!-- FLOWERS -->
+
+<div class="flowers">
+    <span style="left:10%;animation-duration:8s;">🌸</span>
+    <span style="left:30%;animation-duration:10s;">🌺</span>
+    <span style="left:50%;animation-duration:12s;">🌷</span>
+    <span style="left:70%;animation-duration:9s;">🌸</span>
+</div>
+
+<!-- BALLOONS -->
+
+<div class="balloons">
+    <div class="balloon balloon1"></div>
+    <div class="balloon balloon2"></div>
+    <div class="balloon balloon3"></div>
+    <div class="balloon balloon4"></div>
+    <div class="balloon balloon5"></div>
+</div>
+
+<!-- OPEN PAGE -->
+
+<section class="open-page">
+
+    <div class="envelope" id="envelope">
+
+        <div class="flap"></div>
+
+        <div class="envelope-body"></div>
+
+        <div class="letter-paper">
+            <h2>For You 💌</h2>
+        </div>
+
+    </div>
+
+    <button class="open-btn" onclick="openLetter()">
+        OPEN
+    </button>
+
+</section>
+
+<!-- POPUP -->
+
+<div class="popup" id="popup">
+
+    <div class="birthday-text">
+        Happy Birthday
+    </div>
+
+    <div class="name">
+        Sravanthi ✨
+    </div>
+
+    <div class="typing" id="typing"></div>
+
+    <button class="next-btn" onclick="showFirstCard()">
+        Continue 💖
+    </button>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<section class="main-content" id="mainContent">
+
+    <!-- FIRST CARD -->
+
+    <div class="card">
+
+        <!-- YOUR IMAGE -->
+
+        <img src="sravanthi.jpg" alt="Sravanthi">
+
+        <div class="message">
+
+            <h2>For You 💖</h2>
+
+            <p>
+                Happy Birthday to the most beautiful soul ✨<br><br>
+
+                May your smile always shine brighter than stars 🌟
+                May happiness follow you forever 💕
+                And may every dream of yours come true 🌸
+            </p>
+
+            <button class="next-btn" onclick="showSecondCard()">
+                Continue 💌
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- SECOND CARD -->
+
+    <div class="card second-card" id="secondCard">
+
+        <div class="message">
+
+            <h2>Special Message 💖</h2>
+
+            <p>
+
+                Happy Birthday Sravanthi 🎉 <br><br>
+
+                Chala mandhi life looki vastaru potharu...
+                but kontha mandhi matram permanent ayipotharu,
+                na life loo alanti person nuvvu 💗
+                <br><br>
+
+                Manam kalisina days eppudu gurthochina automatic ga smile vastundhi ✨
+                aa random talks, laughing without any reasons,
+                gossip on our enemies 😭
+                Anni chala special 💖
+                <br><br>
+
+                Nijam ga cheppali antey nuvv untey normal day kuda special ayipothadhi 💫
+                <br><br>
+
+                Ippudu entha busy ina entha dhuram loo unna
+                nee birthday ki ila msg chesetappudu
+                Anni flash avthai 🥺
+                <br><br>
+
+                Life loo nuv eppudu Happy ga undali ✨
+                nee smile eppudu alaney undali 💕
+                nuvv anukunna prathi dream nijam avvali 💝👑
+                <br><br>
+
+                Thank you for being part of my life 🫂❤️
+                <br><br>
+
+                <span class="highlight">
+                    "No words to tell about you..." 💖
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- MUSIC -->
+
+<audio id="song" loop>
+    <source src="your-song.mp3" type="audio/mp3">
+</audio>
+
+<!-- MUSIC VISUALIZER -->
+
+<div class="music-box">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</div>
+
+<script>
+
+/* STARS */
+
+for(let i=0;i<80;i++){
+
+    let star=document.createElement("span");
+
+    star.style.left=Math.random()*100+"%";
+    star.style.top=Math.random()*100+"%";
+
+    document.getElementById("stars").appendChild(star);
+}
+
+/* OPEN LETTER */
+
+function openLetter(){
+
+    document.getElementById("envelope").classList.add("open");
+
+    setTimeout(()=>{
+
+        document.getElementById("popup").classList.add("show");
+
+        document.getElementById("song").play();
+
+        typeMessage();
+
+        confetti({
+            particleCount:250,
+            spread:120,
+            origin:{y:0.6}
+        });
+
+    },1000);
+}
+
+/* TYPING */
+
+let text="Wishing you endless happiness, smiles, love and magical memories forever 💖";
+
+let i=0;
+
+function typeMessage(){
+
+    function typing(){
+
+        if(i<text.length){
+
+            document.getElementById("typing").innerHTML+=text.charAt(i);
+
+            i++;
+
+            setTimeout(typing,50);
+        }
+    }
+
+    typing();
+}
+
+/* SHOW FIRST CARD */
+
+function showFirstCard(){
+
+    document.getElementById("popup").style.display="none";
+
+    document.getElementById("mainContent").classList.add("show");
+
+    window.scrollTo({
+        top:document.body.scrollHeight,
+        behavior:'smooth'
+    });
+
+}
+
+/* SHOW SECOND CARD */
+
+function showSecondCard(){
+
+    document.getElementById("secondCard").classList.add("show");
+
+    window.scrollTo({
+        top:document.body.scrollHeight,
+        behavior:'smooth'
+    });
+
+    confetti({
+        particleCount:150,
+        spread:100
+    });
+
+}
+
+</script>
+
+</body>
+</html>
